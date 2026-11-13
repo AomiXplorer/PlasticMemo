@@ -1,5 +1,5 @@
 /* Service worker: precache the shell, cache art and audio on first use. */
-const VERSION = 'uylm-v16';
+const VERSION = 'uylm-v17';
 const SHELL = [
   './',
   './index.html',
