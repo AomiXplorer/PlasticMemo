@@ -995,6 +995,15 @@ button {
   overflow: hidden;
 }
 
+/* Hard guard: this id selector outranks `.screen { display: none }`,
+   so the hidden state has to be re-declared or the menu sits on top of
+   the game and swallows every click. */
+#screen-menu:not(.is-active) {
+  display: none;
+  pointer-events: none;
+  visibility: hidden;
+}
+
 #screen-menu .title-art {
   grid-column: 2;
   grid-row: 1;
