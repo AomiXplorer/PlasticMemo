@@ -2,19 +2,21 @@
  * Picks one of four endings from the relationship axes and flags.
  * Pure function of state, so tools/simulate-endings.mjs can test every path.
  *
- * Thresholds were tuned by walking all 531,441 choice combinations
- * (tools/simulate-endings.mjs) so that the four outcomes land at roughly
- * true 2%, good 31%, normal 36%, bad 31% for a player picking at random, and
- * so that a deliberate player reliably lands where they aimed:
- *   bad    bond under 30%, or the transfer pushed while the bond was thin, or
- *          she was pushed away and never repaired
- *   true   bond 48%+, honesty 30%+, resolve 38%+, honoured her wish and never
- *          pushed the transfer. A verified route: honest in ch01-03, ask Kaito
- *          about the transfer in ch04, admit fear instead of anger in ch05,
- *          tell Hina about the glitch in ch06, honour Mizuki in ch07, say the
- *          real thing on air. Lands at bond 78 / honesty 73 / resolve 50.
- *   good   bond 44%+ without the resolve to chase a solution
- *   normal everything else: he was there, but not enough of him was
+ * Thresholds were re-tuned after the story rewrite by walking all 531,441
+ * combinations (tools/simulate-endings.mjs). A player choosing at random lands
+ * true 4.7% / good 26% / normal 39% / bad 30%, and a deliberate player lands
+ * where they aimed:
+ *   bad    he pushed the transfer while the bond was thin, he pushed her away
+ *          and never repaired it, or he never bonded at all
+ *   true   deep bond + honesty + some technical pursuit + honoured her wish.
+ *          Verified route: honest throughout, ask Kaito about the transfer in
+ *          ch04, stay with her in ch05, tell Hina in ch06, respect Mizuki in
+ *          ch07. Lands at bond 81 / honesty 87 / resolve 27.
+ *   good   he cared and showed up, but never chased a way to keep her
+ *   normal he was around without ever saying the real thing
+ *
+ * "Technical only" play (resolve maxed, no bond) ends in bad on purpose: solving
+ * the problem without caring about the person is the failure the story is about.
  */
 export const ENDING_ORDER = ['true', 'good', 'normal', 'bad'];
 
@@ -52,13 +54,13 @@ export function ratioOf(state, axis) {
 }
 
 export const THRESHOLDS = {
-  badBond: 0.30,
-  pushGuard: 0.34,
-  abandonGuard: 0.34,
-  trueBond: 0.48,
-  trueHonesty: 0.30,
-  trueResolve: 0.38,
-  goodBond: 0.44,
+  badBond: 0.08,
+  pushGuard: 0.20,
+  abandonGuard: 0.14,
+  trueBond: 0.42,
+  trueHonesty: 0.34,
+  trueResolve: 0.22,
+  goodBond: 0.36,
 };
 
 export function resolveEnding(state) {

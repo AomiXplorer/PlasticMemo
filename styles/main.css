@@ -978,3 +978,407 @@ button {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ============================================================
+   TITLE SCREEN — rebuilt
+   Asymmetric plate: ink type panel on the left, key art panel
+   bleeding on the right, rain drifting over the art only.
+   Everything here is scoped to #screen-menu so it overrides the
+   older menu rules without touching them.
+   ============================================================ */
+
+#screen-menu {
+  display: grid;
+  grid-template-columns: minmax(320px, 40vw) 1fr;
+  grid-template-rows: 100%;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+#screen-menu .title-art {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  background: var(--ink-2);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 16%);
+}
+
+#screen-menu .title-art::before {
+  content: '';
+  position: absolute;
+  inset: -2%;
+  background: url(../assets/bg/title_art.webp) center / cover no-repeat;
+  animation: titleBreathe 48s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+#screen-menu .title-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(130% 100% at 72% 42%, transparent 30%, rgba(11, 10, 13, 0.62) 88%),
+    linear-gradient(to top, rgba(11, 10, 13, 0.82), transparent 42%);
+}
+
+#screen-menu .title-rain {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 30%, #000 100%);
+}
+
+#screen-menu .title-rain::before {
+  content: '';
+  position: absolute;
+  inset: -30% -10%;
+  background-image: repeating-linear-gradient(
+    96deg,
+    transparent 0 21px,
+    rgba(224, 236, 246, 0.22) 21px 22px,
+    transparent 22px 44px
+  );
+  animation: rainFall 620ms linear infinite;
+}
+
+#screen-menu .title-rain::after {
+  content: '';
+  position: absolute;
+  inset: -30% -10%;
+  background-image: repeating-linear-gradient(
+    96deg,
+    transparent 0 43px,
+    rgba(224, 236, 246, 0.1) 43px 44px,
+    transparent 44px 88px
+  );
+  animation: rainFall 980ms linear infinite;
+}
+
+@keyframes rainFall {
+  from { background-position: 0 0; }
+  to   { background-position: -14px 44px; }
+}
+
+@keyframes titleBreathe {
+  from { transform: scale(1.02) translate3d(0, 0, 0); }
+  to   { transform: scale(1.11) translate3d(-1.2%, -0.8%, 0); }
+}
+
+#screen-menu .title-panel {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 3.4vw, 52px) clamp(22px, 3vw, 46px);
+  background: linear-gradient(100deg, var(--ink) 0%, var(--ink) 72%, rgba(11, 10, 13, 0.86) 100%);
+}
+
+#screen-menu .title-panel::before {
+  content: '88.3 MHz — SAGARA';
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  font-size: 9px;
+  letter-spacing: 0.44em;
+  text-transform: uppercase;
+  color: rgba(242, 234, 223, 0.3);
+  pointer-events: none;
+}
+
+/* ---- brand block ---- */
+
+#screen-menu .brand {
+  width: 100%;
+  max-width: none;
+  align-self: stretch;
+}
+
+#screen-menu .brand-id {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 9px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--paper-faint);
+  overflow: hidden;
+}
+
+#screen-menu .brand-id > span { flex: 0 0 auto; }
+
+#screen-menu .brand-live {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 0 3px rgba(216, 162, 74, 0.13);
+  animation: livePulse 3.4s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.28; }
+}
+
+#screen-menu .brand-rule {
+  flex: 0 1 26px;
+  min-width: 8px;
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+}
+
+#screen-menu .brand-title {
+  margin: 24px 0 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--paper);
+}
+
+#screen-menu .brand-pre {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 14px;
+}
+
+#screen-menu .brand-main {
+  display: block;
+  font-size: clamp(38px, 4.9vw, 64px);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+}
+
+#screen-menu .brand-ja {
+  margin: 16px 0 0;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(242, 234, 223, 0.46);
+}
+
+#screen-menu .brand-sub {
+  margin: 18px 0 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--paper-faint);
+  max-width: 36ch;
+}
+
+/* ---- menu list ---- */
+
+#screen-menu .menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: auto 0 0;
+  padding-top: 18px;
+  align-self: stretch;
+  border-top: 0;
+}
+
+#screen-menu .menu-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  align-items: baseline;
+  gap: 0 10px;
+  width: 100%;
+  padding: 8px 0 8px 12px;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  color: var(--paper-dim);
+  transition: color var(--t-fast) var(--ease);
+}
+
+#screen-menu .menu-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 2px;
+  height: 0;
+  background: var(--amber);
+  transform: translateY(-50%);
+  transition: height var(--t-fast) var(--ease);
+}
+
+#screen-menu .menu-num {
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: rgba(242, 234, 223, 0.44);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--t-fast) var(--ease);
+}
+
+#screen-menu .menu-label {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 14.5px;
+  letter-spacing: 0.055em;
+  color: inherit;
+  transition: transform var(--t-fast) var(--ease);
+}
+
+#screen-menu .menu-note {
+  grid-column: 2;
+  margin-top: 2px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper-faint);
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity var(--t-fast) var(--ease), max-height var(--t-fast) var(--ease);
+}
+
+#screen-menu .menu-item:hover,
+#screen-menu .menu-item:focus-visible {
+  color: var(--paper);
+  outline: none;
+}
+
+#screen-menu .menu-item:hover::before,
+#screen-menu .menu-item:focus-visible::before { height: 58%; }
+
+#screen-menu .menu-item:hover .menu-num,
+#screen-menu .menu-item:focus-visible .menu-num { color: var(--amber); }
+
+#screen-menu .menu-item:hover .menu-label,
+#screen-menu .menu-item:focus-visible .menu-label { transform: translateX(3px); }
+
+#screen-menu .menu-item:hover .menu-note,
+#screen-menu .menu-item:focus-visible .menu-note { opacity: 0.82; max-height: 14px; }
+
+#screen-menu .menu-item[disabled] {
+  cursor: not-allowed;
+  color: rgba(242, 234, 223, 0.34);
+}
+
+#screen-menu .menu-item[disabled]:hover { color: rgba(242, 234, 223, 0.34); }
+#screen-menu .menu-item[disabled]:hover .menu-label { transform: none; }
+#screen-menu .menu-item[disabled]:hover::before { height: 0; }
+#screen-menu .menu-item[disabled]:hover .menu-num { color: rgba(242, 234, 223, 0.44); }
+
+#screen-menu .menu-item[disabled] .menu-note {
+  opacity: 0.7;
+  max-height: 14px;
+}
+
+/* ---- foot ---- */
+
+#screen-menu .menu-foot {
+  position: static;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+}
+
+#screen-menu .menu-progress {
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(242, 234, 223, 0.55);
+  font-variant-numeric: tabular-nums;
+}
+
+#screen-menu .link-btn {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(242, 234, 223, 0.46);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+
+#screen-menu .link-btn:hover { color: var(--amber); border-color: var(--amber-soft); }
+
+/* ---- narrow / short screens ---- */
+
+@media (max-width: 900px) {
+  #screen-menu { grid-template-columns: 1fr; }
+
+  #screen-menu .title-art {
+    grid-column: 1;
+    position: absolute;
+    inset: 0;
+    mask-image: none;
+    -webkit-mask-image: none;
+    opacity: 0.9;
+  }
+
+  #screen-menu .title-art::after {
+    background:
+      linear-gradient(180deg, rgba(11, 10, 13, 0.88) 0%, rgba(11, 10, 13, 0.66) 38%, rgba(11, 10, 13, 0.95) 100%);
+  }
+
+  #screen-menu .title-rain { grid-column: 1; position: absolute; inset: 0; opacity: 0.28; }
+  #screen-menu .title-panel { grid-column: 1; z-index: 3; background: none; }
+  #screen-menu .title-panel::before { display: none; }
+  #screen-menu .brand-sub { display: none; }
+  #screen-menu .brand-title { margin-top: 20px; }
+  #screen-menu .brand-main { font-size: clamp(30px, 8vw, 44px); }
+}
+
+@media (max-height: 720px) {
+  #screen-menu .brand-title { margin-top: 16px; }
+  #screen-menu .brand-main { font-size: clamp(30px, 3.8vw, 46px); }
+  #screen-menu .brand-ja { margin-top: 10px; }
+  #screen-menu .brand-sub { margin-top: 12px; font-size: 11.5px; line-height: 1.6; }
+  #screen-menu .menu-item { padding: 6px 0 6px 11px; }
+  #screen-menu .menu-label { font-size: 13.5px; }
+  #screen-menu .menu-foot { margin-top: 12px; padding-top: 12px; }
+}
+
+@media (max-height: 520px) {
+  #screen-menu .title-panel { padding: 16px 20px; }
+  #screen-menu .brand-title { margin-top: 12px; }
+  #screen-menu .brand-main { font-size: clamp(24px, 4.4vw, 34px); }
+  #screen-menu .brand-ja,
+  #screen-menu .brand-sub { display: none; }
+  #screen-menu .menu-item { padding: 5px 0 5px 10px; }
+  #screen-menu .menu-label { font-size: 12.5px; }
+  #screen-menu .menu-note { display: none; }
+  #screen-menu .menu-foot { padding-top: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #screen-menu .title-art::before,
+  #screen-menu .title-rain::before,
+  #screen-menu .title-rain::after,
+  #screen-menu .brand-live { animation: none; }
+  #screen-menu .title-rain { opacity: 0.22; }
+}

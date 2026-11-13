@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" translate="no" class="notranslate">
 <head>
 <meta charset="utf-8" />
+<meta name="google" content="notranslate" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
 <meta name="theme-color" content="#0b0a0d" />
 <meta name="description" content="Until Your Last Memory — sebuah visual novel anime tentang suara, waktu, dan kenangan yang tidak bisa diulang." />
@@ -14,9 +15,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Last Memory" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="preload" href="assets/fonts/shippori-mincho-500.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="assets/fonts/zen-kaku-gothic-new-400.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="assets/fonts/fonts.css" />
 <link rel="stylesheet" href="styles/main.css" />
 </head>
 
@@ -33,7 +34,7 @@
     <header id="toolbar" class="toolbar">
       <div class="toolbar-left">
         <span id="hud-chapter" class="hud-chapter">Ch. 01</span>
-        <span id="hud-title" class="hud-title">A Voice From Midnight</span>
+        <span id="hud-title" class="hud-title">Suara dari Tengah Malam</span>
       </div>
       <nav class="toolbar-right" aria-label="Menu permainan">
         <button class="tbtn" data-act="auto" type="button">Auto</button>
@@ -66,35 +67,59 @@
 
   <!-- ============ TITLE SCREEN ============ -->
   <section id="screen-menu" class="screen screen-menu is-active" aria-label="Menu utama">
-    <div class="menu-bg" aria-hidden="true"></div>
-    <div class="menu-inner">
+    <div class="title-art" aria-hidden="true"></div>
+    <div class="title-rain" aria-hidden="true"></div>
+    <div class="title-panel">
       <header class="brand">
-        <p class="brand-kicker">Radio Aster · 88.3</p>
-        <h1 class="brand-title">Until Your<br />Last Memory</h1>
-        <p class="brand-sub">Sebuah visual novel tentang suara, waktu, dan kenangan<br />yang tidak bisa diulang.</p>
+        <p class="brand-id">
+          <span class="brand-live" aria-hidden="true"></span>
+          <span>Radio Aster</span>
+          <span class="brand-rule" aria-hidden="true"></span>
+          <span>Midnight Letters</span>
+        </p>
+        <h1 class="brand-title">
+          <span class="brand-pre">Until Your</span>
+          <span class="brand-main">Last Memory</span>
+        </h1>
+        <p class="brand-ja">Siaran malam · 22.00–04.00 · Sagara</p>
+        <p class="brand-sub">Sagara, 2049. Satu program radio, satu EVA yang punya batas waktu.</p>
       </header>
 
       <nav class="menu-list" aria-label="Pilihan menu">
         <button class="menu-item" data-menu="new" type="button">
-          <span class="menu-label">New Game</span><span class="menu-note">Mulai dari awal</span>
+          <span class="menu-num" aria-hidden="true">01</span>
+          <span class="menu-label">New Game</span>
+          <span class="menu-note">Mulai dari awal</span>
         </button>
         <button class="menu-item" data-menu="continue" type="button">
-          <span class="menu-label">Continue</span><span class="menu-note" id="continue-note">Belum ada simpanan</span>
+          <span class="menu-num" aria-hidden="true">02</span>
+          <span class="menu-label">Continue</span>
+          <span class="menu-note" id="continue-note">Belum ada simpanan</span>
         </button>
         <button class="menu-item" data-menu="load" type="button">
-          <span class="menu-label">Load Game</span><span class="menu-note">Enam slot</span>
+          <span class="menu-num" aria-hidden="true">03</span>
+          <span class="menu-label">Load Game</span>
+          <span class="menu-note">Enam slot simpanan</span>
         </button>
         <button class="menu-item" data-menu="chapters" type="button">
-          <span class="menu-label">Chapter Selection</span><span class="menu-note">Hanya yang sudah dibuka</span>
+          <span class="menu-num" aria-hidden="true">04</span>
+          <span class="menu-label">Chapter Selection</span>
+          <span class="menu-note">Hanya yang sudah dibuka</span>
         </button>
         <button class="menu-item" data-menu="gallery" type="button">
-          <span class="menu-label">Gallery</span><span class="menu-note">Kenangan yang terbuka</span>
+          <span class="menu-num" aria-hidden="true">05</span>
+          <span class="menu-label">Gallery</span>
+          <span class="menu-note">Kenangan yang terbuka</span>
         </button>
         <button class="menu-item" data-menu="settings" type="button">
-          <span class="menu-label">Settings</span><span class="menu-note">Teks, suara, layar</span>
+          <span class="menu-num" aria-hidden="true">06</span>
+          <span class="menu-label">Settings</span>
+          <span class="menu-note">Teks, suara, layar</span>
         </button>
         <button class="menu-item" data-menu="credits" type="button">
-          <span class="menu-label">Credits</span><span class="menu-note">Tim dan catatan</span>
+          <span class="menu-num" aria-hidden="true">07</span>
+          <span class="menu-label">Credits</span>
+          <span class="menu-note">Tim dan catatan</span>
         </button>
       </nav>
 

@@ -1,10 +1,14 @@
 /* Service worker: precache the shell, cache art and audio on first use. */
-const VERSION = 'uylm-v3';
+const VERSION = 'uylm-v14';
 const SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
   './styles/main.css',
+  './assets/fonts/fonts.css',
+  './assets/fonts/shippori-mincho-500.woff2',
+  './assets/fonts/zen-kaku-gothic-new-400.woff2',
+  './assets/bg/title_art.webp',
   './src/main.js',
   './src/core/game.js',
   './src/core/storyEngine.js',

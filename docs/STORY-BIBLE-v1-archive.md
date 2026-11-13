@@ -1,3 +1,7 @@
+> **Arsip.** Dokumen ini versi pertama. Sudah digantikan oleh
+> [`STORY-BIBLE-v2.md`](./STORY-BIBLE-v2.md) dan [`BEATS.md`](./BEATS.md).
+> Disimpan cuma buat catatan sejarah; jangan dipakai buat nulis chapter baru.
+
 # UNTIL YOUR LAST MEMORY — Story Bible
 
 Buku kerja internal. Semua penulis chapter wajib ikut file ini.
