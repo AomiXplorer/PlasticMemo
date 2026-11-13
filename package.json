@@ -1,0 +1,11 @@
+{
+  "name": "until-your-last-memory",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Until Your Last Memory — an original Japanese-style anime visual novel.",
+  "scripts": {
+    "validate": "node tools/validate-story.mjs",
+    "serve": "python3 -m http.server 4173"
+  }
+}

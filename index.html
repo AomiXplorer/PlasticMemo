@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+<meta name="theme-color" content="#0b0a0d" />
+<meta name="description" content="Until Your Last Memory — sebuah visual novel anime tentang suara, waktu, dan kenangan yang tidak bisa diulang." />
+<title>Until Your Last Memory</title>
+
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="assets/icons/icon-192.png" />
+<link rel="apple-touch-icon" href="assets/icons/icon-180.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Last Memory" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles/main.css" />
+</head>
+
+<body>
+<div id="app" class="app">
+
+  <!-- ============ GAME STAGE ============ -->
+  <main id="stage" class="stage" aria-label="Game screen">
+    <div id="bg-layer" class="bg-layer-wrap"></div>
+    <div id="char-layer" class="char-layer" aria-hidden="true"></div>
+    <div id="fx-layer" class="fx-layer" aria-hidden="true"></div>
+
+    <!-- top toolbar -->
+    <header id="toolbar" class="toolbar">
+      <div class="toolbar-left">
+        <span id="hud-chapter" class="hud-chapter">Ch. 01</span>
+        <span id="hud-title" class="hud-title">A Voice From Midnight</span>
+      </div>
+      <nav class="toolbar-right" aria-label="Menu permainan">
+        <button class="tbtn" data-act="auto" type="button">Auto</button>
+        <button class="tbtn" data-act="skip" type="button">Skip</button>
+        <button class="tbtn" data-act="log" type="button">Log</button>
+        <button class="tbtn" data-act="save" type="button">Save</button>
+        <button class="tbtn" data-act="load" type="button">Load</button>
+        <button class="tbtn" data-act="settings" type="button">Settings</button>
+        <button class="tbtn" data-act="menu" type="button">Menu</button>
+        <button class="tbtn tbtn-icon" data-act="fullscreen" type="button" aria-label="Layar penuh">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 9V4h5M20 15v5h-5M20 9V4h-5M4 15v5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+        </button>
+      </nav>
+    </header>
+
+    <!-- dialogue -->
+    <section id="dialogue" class="dialogue" aria-live="polite">
+      <div id="dialogue-box" class="dialogue-box">
+        <div class="dialogue-border" aria-hidden="true"></div>
+        <div id="speaker-name" class="speaker-name"></div>
+        <p id="dialogue-text" class="dialogue-text"></p>
+        <div id="dialogue-hint" class="dialogue-hint" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+        </div>
+      </div>
+    </section>
+
+    <div id="choice-layer" class="choice-layer" role="group" aria-label="Pilihan"></div>
+  </main>
+
+  <!-- ============ TITLE SCREEN ============ -->
+  <section id="screen-menu" class="screen screen-menu is-active" aria-label="Menu utama">
+    <div class="menu-bg" aria-hidden="true"></div>
+    <div class="menu-inner">
+      <header class="brand">
+        <p class="brand-kicker">Radio Aster · 88.3</p>
+        <h1 class="brand-title">Until Your<br />Last Memory</h1>
+        <p class="brand-sub">Sebuah visual novel tentang suara, waktu, dan kenangan<br />yang tidak bisa diulang.</p>
+      </header>
+
+      <nav class="menu-list" aria-label="Pilihan menu">
+        <button class="menu-item" data-menu="new" type="button">
+          <span class="menu-label">New Game</span><span class="menu-note">Mulai dari awal</span>
+        </button>
+        <button class="menu-item" data-menu="continue" type="button">
+          <span class="menu-label">Continue</span><span class="menu-note" id="continue-note">Belum ada simpanan</span>
+        </button>
+        <button class="menu-item" data-menu="load" type="button">
+          <span class="menu-label">Load Game</span><span class="menu-note">Enam slot</span>
+        </button>
+        <button class="menu-item" data-menu="chapters" type="button">
+          <span class="menu-label">Chapter Selection</span><span class="menu-note">Hanya yang sudah dibuka</span>
+        </button>
+        <button class="menu-item" data-menu="gallery" type="button">
+          <span class="menu-label">Gallery</span><span class="menu-note">Kenangan yang terbuka</span>
+        </button>
+        <button class="menu-item" data-menu="settings" type="button">
+          <span class="menu-label">Settings</span><span class="menu-note">Teks, suara, layar</span>
+        </button>
+        <button class="menu-item" data-menu="credits" type="button">
+          <span class="menu-label">Credits</span><span class="menu-note">Tim dan catatan</span>
+        </button>
+      </nav>
+
+      <footer class="menu-foot">
+        <span id="menu-progress" class="menu-progress"></span>
+        <button class="link-btn" data-menu="rotate-hint" type="button">Main di HP? Baca dulu</button>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ============ OVERLAY PANELS ============ -->
+  <section id="panel" class="panel" aria-live="polite">
+    <div class="panel-head">
+      <h2 id="panel-title" class="panel-title">Settings</h2>
+      <button class="panel-close" data-close-panel type="button" aria-label="Tutup">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+      </button>
+    </div>
+    <div id="panel-body" class="panel-body"></div>
+  </section>
+
+  <!-- ============ LOG ============ -->
+  <section id="log-view" class="panel panel-wide" aria-label="Riwayat dialog">
+    <div class="panel-head">
+      <h2 class="panel-title">Log Percakapan</h2>
+      <button class="panel-close" data-close-log type="button" aria-label="Tutup">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+      </button>
+    </div>
+    <div id="log-body" class="log-body"></div>
+  </section>
+
+  <!-- ============ ENDING CARD ============ -->
+  <section id="screen-ending" class="screen screen-ending" aria-label="Akhir cerita">
+    <div class="ending-inner">
+      <p class="ending-kicker">Ending</p>
+      <h2 id="ending-title" class="ending-title"></h2>
+      <p id="ending-sub" class="ending-sub"></p>
+      <p id="ending-line" class="ending-line"></p>
+      <div id="ending-stats" class="ending-stats"></div>
+      <div class="ending-actions">
+        <button class="btn-primary" data-ending="gallery" type="button">Buka Gallery</button>
+        <button class="btn-ghost" data-ending="menu" type="button">Kembali ke Menu</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ROTATE OVERLAY ============ -->
+  <div id="rotate-overlay" class="rotate-overlay" aria-hidden="true">
+    <div class="rotate-inner">
+      <svg class="rotate-icon" viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
+        <rect x="14" y="6" width="36" height="52" rx="6" fill="none" stroke="currentColor" stroke-width="2" />
+        <path d="M26 50h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        <path d="M50 24a18 18 0 01-4 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        <path d="M46 40l-3 6 6 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <p class="rotate-title">Miringkan HP kamu</p>
+      <p class="rotate-note">Game ini dibuat untuk layar mendatar. Progres kamu aman, nggak akan hilang.</p>
+      <button class="btn-ghost" data-rotate-fullscreen type="button">Coba layar penuh</button>
+      <button class="rotate-skip" data-rotate-dismiss type="button">Lanjut dalam mode potret</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+</div>
+
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
