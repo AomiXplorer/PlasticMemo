@@ -443,6 +443,14 @@ button {
 }
 
 .screen.is-active { display: block; opacity: 1; }
+/* A hidden screen must never eat input. Any id-level layout rule that
+   outranks `.screen { display: none }` would otherwise leave the panel
+   stacked over the stage with z-index 20. */
+.screen:not(.is-active) {
+  pointer-events: none;
+  visibility: hidden;
+}
+
 
 .screen-menu { background: var(--ink); overflow: hidden; }
 
